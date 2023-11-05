@@ -1,4 +1,4 @@
-# Transformer-and-gan-from-scratch
+# Transformers-and-gan-from-scratch
 
 # GAN:
 
