@@ -5,6 +5,7 @@ import utils
 from embedding_positional_encoding import EmbeddingPositionEncoding    
 from single_attention_head import SingleAttentionHead
 from multi_head_attention import MultiHeadAttention
+from decoder import TransformerDecoder
 
 text_data = "Hello World!"
 
@@ -26,4 +27,8 @@ assert one_attention_head(encoding_output, False).size() == torch.Size([len_seq,
     
 h = 6
 multi_head_attention = MultiHeadAttention(emb_dim, attention_dim, h)
-assert multi_head_attention(encoding_output, False).size() == torch.Size([h*encoding_output.size(0), encoding_output.size(1)])
+assert multi_head_attention(encoding_output, False).size() == encoding_output.size()
+
+decoder = TransformerDecoder(emb_dim, attention_dim, h)
+output_decoder = decoder(encoding_output)
+assert output_decoder.size() == encoding_output.size()

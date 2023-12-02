@@ -21,7 +21,7 @@ class SingleAttentionHead(nn.Module):
         output_attention = torch.matmul(output_softmax, value)
         return output_attention # (seq_len, attention_dim)
 
-    def forward(self, input, mask): # input (seq_len, embedding_dim)
+    def forward(self, input, mask): # input shape: (seq_len, embedding_dim)
         output_query = self.query_linear(input) # (seq_len, attention_dim)
         output_key = self.key_linear(input) # (seq_len, attention_dim)
         output_value = self.value_linear(input) # (seq_len, attention_dim)
