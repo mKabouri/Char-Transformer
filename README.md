@@ -1,4 +1,6 @@
 # Char-Transfomer
+- My first transformer from scratch.
+
 
 ### References
 
