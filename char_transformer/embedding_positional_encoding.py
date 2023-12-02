@@ -28,4 +28,4 @@ class EmbeddingPositionEncoding(nn.Module):
 
     def forward(self, input):
         output_emb = self.embed(input) # shape: (sequence_length, embed_dim)
-        return (output_emb + self.pos_enc).detach()
+        return output_emb + self.pos_enc
