@@ -6,6 +6,7 @@ from embedding_positional_encoding import EmbeddingPositionEncoding
 from single_attention_head import SingleAttentionHead
 from multi_head_attention import MultiHeadAttention
 from decoder import TransformerDecoder
+from main import CharTransformer
 
 text_data = "Hello World!"
 
@@ -32,3 +33,11 @@ assert multi_head_attention(encoding_output, False).size() == encoding_output.si
 decoder = TransformerDecoder(emb_dim, attention_dim, h)
 output_decoder = decoder(encoding_output)
 assert output_decoder.size() == encoding_output.size()
+
+charTransformer = CharTransformer(vocab_size,
+                                  emb_dim,
+                                  len_seq,
+                                  attention_dim,
+                                  h)
+output_transformer = charTransformer(tensor_data)
+assert output_transformer.size() == torch.Size([len_seq, vocab_size])

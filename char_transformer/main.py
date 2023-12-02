@@ -11,8 +11,7 @@ class CharTransformer(nn.Module):
                  embedding_dim,
                  len_seq,
                  attention_dim,
-                 nb_heads,
-                 output_dim):
+                 nb_heads):
         super().__init__()
         self.input_encoding = EmbeddingPositionEncoding(vocab_size, embedding_dim, len_seq)
         
@@ -24,4 +23,4 @@ class CharTransformer(nn.Module):
         output = self.input_encoding(input_tensor_seq)
         output = self.decoder(output)
         output = self.fc(output)
-        return output
+        return output # (seq_len, vocab_size)
