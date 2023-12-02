@@ -20,10 +20,10 @@ tensor_data = utils.text_to_tensor(text_data, ctoi)
 encoding_output = encoding(tensor_data)
 assert encoding_output.size() == torch.Size([len_seq, emb_dim])
 
-attention_dim = 5
+attention_dim = emb_dim
 one_attention_head = SingleAttentionHead(emb_dim, attention_dim)
-assert one_attention_head(encoding_output).size() == torch.Size([len_seq, attention_dim])
+assert one_attention_head(encoding_output, False).size() == torch.Size([len_seq, attention_dim])
     
-multi_head_attention = MultiHeadAttention(emb_dim, attention_dim, 6)
-
-assert multi_head_attention(encoding_output).size() == tensor_data.size()
+h = 6
+multi_head_attention = MultiHeadAttention(emb_dim, attention_dim, h)
+assert multi_head_attention(encoding_output, False).size() == torch.Size([h*encoding_output.size(0), encoding_output.size(1)])

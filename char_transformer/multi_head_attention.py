@@ -13,7 +13,7 @@ class MultiHeadAttention(nn.Module):
             SingleAttentionHead(embedding_dim, attention_dim) for _ in range(nb_heads)
         ]
 
-    def forward(self, input): # input: (seq_len, attention_dim)
-        output_heads = torch.cat([self.heads[i](input) for i in range(self.nb_heads)]) # (nb_heads*seq_len, attention_dim)
+    def forward(self, input, mask): # input: (seq_len, attention_dim)
+        output_heads = torch.cat([self.heads[i](input, mask) for i in range(self.nb_heads)]) # (nb_heads*seq_len, attention_dim)
         output_multi_head_attention = self.multi_head_linear(output_heads)
-        return output_multi_head_attention
+        return output_multi_head_attention # (h*seq_len, attention_dim)
