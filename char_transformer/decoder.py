@@ -28,4 +28,4 @@ class TransformerDecoder(nn.Module):
         output += self.feed_forward(output)
         output = self.layer_norm3(output) 
 
-        return output # (h*seq_len, attention_dim)
+        return output # (seq_len, attention_dim)
