@@ -28,4 +28,11 @@ class EmbeddingPositionEncoding(nn.Module):
 
     def forward(self, input):
         output_emb = self.embed(input) # shape: (sequence_length, embed_dim)
-        return output_emb + self.pos_enc
+        input_ndim = input.ndim
+        if input_ndim == 1:
+            pos_enc = self.pos_enc[:input.size(0)]
+        elif input_ndim == 2:
+            pos_enc = self.pos_enc[:input.size(1)]
+        else:
+            raise ValueError(f"Input ndim should be 1 or 2. Got {input_ndim}")
+        return output_emb + pos_enc

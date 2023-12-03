@@ -19,13 +19,14 @@ class TransformerDecoder(nn.Module):
         self.layer_norm3 = nn.LayerNorm(attention_dim)
 
     def forward(self, input): # input shape: (seq_len, embedding_dim)
-        output = input + self.masked_mha(input, mask=True)
-        output = self.layer_norm1(output)
+        masked_mha_output = input + self.masked_mha(input, mask=True)
+        norm1_output = self.layer_norm1(masked_mha_output)
 
-        output += self.mha(output, mask=False)
-        output = self.layer_norm2(output)
+        mha_output = norm1_output + self.mha(norm1_output, mask=False)
+        norm2_output = self.layer_norm2(mha_output)
 
-        output += self.feed_forward(output)
-        output = self.layer_norm3(output) 
+        ff_output = norm2_output + self.feed_forward(norm2_output)
+        norm3_output = self.layer_norm3(ff_output) 
 
-        return output # (seq_len, attention_dim)
+        return norm3_output  # (seq_len, attention_dim)
+
